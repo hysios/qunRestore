@@ -1,4 +1,4 @@
-import welcome from 'shared/welcome'
-import "shared/page.css"
+import welcome from "shared/welcome";
+import "shared/page.css";
 
-welcome('newtab/index.js')
+welcome("newtab/index.js");

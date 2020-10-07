@@ -1,6 +1,20 @@
 body {
-  width: 600px;
+
   font-size: 1.5em;
   background-color: #222;
   color: #bada55;
+}
+
+#drop_zone {
+  width: 600px;
+  height: 400px;
+}
+
+    
+.droppable{
+  border: 2px solid green;
+}
+
+.droppable:hover{
+  background-color: rgba(0,0,0,0.2);
 }

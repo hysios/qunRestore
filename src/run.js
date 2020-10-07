@@ -1,16 +1,16 @@
-process.env.NODE_ENV = 'development'
+process.env.NODE_ENV = "development";
 
 // npm
-import color from 'colors/safe'
-import webpack from 'webpack'
-import WebpackDevServer from 'webpack-dev-server'
+import color from "colors/safe";
+import webpack from "webpack";
+import WebpackDevServer from "webpack-dev-server";
 
 // own
-import easyRequire from './utils/easyRequire'
-import overrideHotUpdater from './webpack/override'
-import * as log from './utils/log'
-import { prepareManifest }  from './shared'
-import webpackGenerator from './webpack/webpack.config.dev'
+import easyRequire from "./utils/easyRequire";
+import overrideHotUpdater from "./webpack/override";
+import * as log from "./utils/log";
+import { prepareManifest } from "./shared";
+import webpackGenerator from "./webpack/webpack.config.dev";
 
 /**
  * Override webpack package files
@@ -18,8 +18,8 @@ import webpackGenerator from './webpack/webpack.config.dev'
  */
 function override() {
   return new Promise((resolve) => {
-    resolve(overrideHotUpdater())
-  })
+    resolve(overrideHotUpdater());
+  });
 }
 
 /**
@@ -31,13 +31,12 @@ function override() {
 function webpackDevelopment(webpackConfig) {
   return new Promise((resolve, reject) => {
     return easyRequire(() => {
-
       // TODO move to config
-      const host = "0.0.0.0"
-      const port = 3001
+      const host = "0.0.0.0";
+      const port = 3001;
 
       new WebpackDevServer(webpack(webpackConfig), {
-        contentBase: 'https://localhost:3001',
+        contentBase: "https://localhost:3001",
         publicPath: webpackConfig.output.publicPath,
         https: true,
         // lazy: true,
@@ -57,33 +56,40 @@ function webpackDevelopment(webpackConfig) {
           // timings: false,
           // chunks: false,
           // chunkModules: false
-        }
+        },
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+            "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Headers":
+            "X-Requested-With, content-type, Authorization",
+        },
       }).listen(port, host, function (err, result) {
         if (err) {
-          reject('webpack: ' + err)
+          reject("webpack: " + err);
         } else {
-          resolve('Listening at https://' + host + ':' + port)
+          resolve("Listening at https://" + host + ":" + port);
         }
-      })
-    })
-  })
+      });
+    });
+  });
 }
 
 function run(options) {
   override()
-  .then(prepareManifest(options))
-  .then((Manifest) => {
-    return webpackGenerator(Manifest)
-  })
-  .then(webpackDevelopment)
-  // Development server ready
-  .then(function(message) {
-    console.log(color.green(message))
-  })
-  // Some error happened
-  .catch(function(error) {
-    console.log(color.red(error.stack || error))
-  })
+    .then(prepareManifest(options))
+    .then((Manifest) => {
+      return webpackGenerator(Manifest);
+    })
+    .then(webpackDevelopment)
+    // Development server ready
+    .then(function (message) {
+      console.log(color.green(message));
+    })
+    // Some error happened
+    .catch(function (error) {
+      console.log(color.red(error.stack || error));
+    });
 }
 
-module.exports = run
+module.exports = run;
