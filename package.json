@@ -1,8 +1,8 @@
 {
-  "name": "chrome-extension-scripts",
-  "version": "0.9.5",
-  "description": "Zero configuration environment for developing Chrome extensions with all new features like Webpack, Babel, React and almost everything you want.",
-  "author": "David Schovanec",
+  "name": "qunRestore",
+  "version": "0.0.1",
+  "description": "快速的群备份与恢复工具",
+  "author": "Hysios Hu",
   "bin": {
     "chrome-extension": "./bin/chrome-extension"
   },
